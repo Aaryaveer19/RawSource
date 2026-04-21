@@ -1,0 +1,22 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MarketplaceService {
+  private apiUrl = 'http://localhost:8080/api';
+
+  constructor(private http: HttpClient) {}
+
+  // Get all raw materials available for purchase
+  getAllMaterials(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/raw-materials`);
+  }
+
+  // Get ratings for a specific material
+  getMaterialRatings(materialId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/raw-materials/${materialId}/ratings`);
+  }
+}

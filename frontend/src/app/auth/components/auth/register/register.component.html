@@ -1,0 +1,114 @@
+<section class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl transition-all border border-gray-100">
+    <div class="text-center">
+      <h2 class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight">
+        Create Account
+      </h2>
+      <p class="mt-2 text-sm text-gray-500">
+        Join the RawSource supply network
+      </p>
+    </div>
+
+    <!-- Role Toggle -->
+    <div class="mt-8 flex p-1 bg-gray-100 rounded-xl">
+      <button 
+        type="button" 
+        (click)="setRole(UserRole.CONSUMER)"
+        [ngClass]="selectedRole === UserRole.CONSUMER ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+        class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all focus:outline-none">
+        Register as Buyer
+      </button>
+      <button 
+        type="button" 
+        (click)="setRole(UserRole.SUPPLIER)"
+        [ngClass]="selectedRole === UserRole.SUPPLIER ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+        class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all focus:outline-none">
+        Register as Supplier
+      </button>
+    </div>
+    
+    <form [formGroup]="registerForm" class="mt-6 space-y-4" (ngSubmit)="onSubmit()">
+      
+      <!-- Backend Error Message -->
+      <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-red-700 font-medium">{{ errorMessage }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4 rounded-md shadow-sm">
+        <!-- Full Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+          <input id="name" type="text" formControlName="name" class="mt-1 appearance-none relative block w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-all" placeholder="John Doe" />
+          <div *ngIf="f['name'].touched && f['name'].errors?.['required']" class="text-xs text-red-500 mt-1">
+            Full Name is required
+          </div>
+          <div *ngIf="f['name'].touched && f['name'].errors?.['minlength']" class="text-xs text-red-500 mt-1">
+            Name must be at least 3 characters
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email-address" class="block text-sm font-medium text-gray-700">Email Address</label>
+          <input id="email-address" type="email" formControlName="email" class="mt-1 appearance-none relative block w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-all" placeholder="you@example.com" />
+          <div *ngIf="f['email'].touched && f['email'].errors?.['required']" class="text-xs text-red-500 mt-1">
+            Email is required
+          </div>
+          <div *ngIf="f['email'].touched && f['email'].errors?.['email']" class="text-xs text-red-500 mt-1">
+            Invalid email format
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700">Phone (Optional)</label>
+          <input id="phone" type="text" formControlName="phone" class="mt-1 appearance-none relative block w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-all" placeholder="+1 (555) 000-0000" />
+        </div>
+
+        <!-- Password -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input id="password" type="password" formControlName="password" class="mt-1 appearance-none relative block w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-all" placeholder="••••••••" />
+            <div *ngIf="f['password'].touched && f['password'].errors?.['required']" class="text-xs text-red-500 mt-1">
+              Required
+            </div>
+          </div>
+          <div>
+            <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm</label>
+            <input id="confirm-password" type="password" formControlName="confirmPassword" class="mt-1 appearance-none relative block w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-all" placeholder="••••••••" />
+            <div *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors?.['required']" class="text-xs text-red-500 mt-1">
+              Required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" [disabled]="isLoading" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all shadow-md shadow-primary-500/20 hover:shadow-lg hover:shadow-primary-500/40">
+          <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          {{ isLoading ? 'Creating Account...' : 'Continue as ' + (selectedRole === UserRole.CONSUMER ? 'Buyer' : 'Supplier') }}
+        </button>
+      </div>
+    </form>
+    
+    <div class="text-center mt-6">
+      <p class="text-sm text-gray-600 font-medium">
+        Already have an account? 
+        <a routerLink="/auth/login" class="font-bold text-primary-600 hover:text-primary-500 transition-colors">Sign In</a>
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,71 @@
+<div class="px-4 sm:px-6 lg:px-8 py-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-xl font-extrabold text-gray-900 tracking-tight">Inventory & Pricing</h1>
+      <p class="mt-2 text-sm text-gray-700 font-medium">Control your real-time availability and adjust unit prices across the network.</p>
+    </div>
+  </div>
+  
+  <div class="mt-8 flex flex-col">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <p class="mt-4 text-gray-500 font-bold uppercase text-[10px] tracking-widest leading-none">Fetching stock data...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!isLoading && errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl mb-8">
+        <p class="text-sm text-red-700 font-bold">{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage" class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow-xl shadow-gray-200/50 border border-gray-100 rounded-3xl">
+          <table class="min-w-full divide-y divide-gray-100">
+            <thead class="bg-gray-50/50">
+              <tr>
+                <th scope="col" class="py-4 pl-6 pr-3 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Material Asset</th>
+                <th scope="col" class="px-3 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Available Volume</th>
+                <th scope="col" class="px-3 py-4 text-left text-[10px] font-black text-gray-400 uppercase tracking-widest">Unit Price ($)</th>
+                <th scope="col" class="px-3 py-4 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">Controls</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50 bg-white">
+              
+              <tr *ngFor="let item of inventoryData" class="hover:bg-primary-50/20 transition-colors group">
+                <td class="whitespace-nowrap py-5 pl-6 pr-3 text-sm font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                  {{ item.materialName || 'Resource Item' }}
+                  <span class="block text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Asset ID: {{ item.availId }}</span>
+                </td>
+                <td class="whitespace-nowrap px-3 py-5 text-sm">
+                    <div class="flex items-center">
+                       <input type="number" [(ngModel)]="item.quantity" class="focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-24 text-sm border-gray-200 rounded-xl border py-1.5 px-3 text-right mr-2 font-bold shadow-inner"> 
+                       <span class="text-xs font-black text-gray-400 uppercase">{{ item.unit || 'units' }}</span>
+                    </div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-5 text-sm">
+                    <div class="flex items-center">
+                       <span class="mr-2 text-gray-400 font-black">$</span>
+                       <input type="number" [(ngModel)]="item.price" class="focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-24 text-sm border border-gray-200 rounded-xl py-1.5 px-3 text-right font-bold shadow-inner"> 
+                    </div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-5 text-right text-sm">
+                  <button (click)="onSave(item)" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-xs font-black uppercase tracking-widest rounded-xl text-primary-700 bg-primary-100 hover:bg-primary-600 hover:text-white focus:outline-none transition-all active:scale-95 shadow-sm">
+                    Sync Changes
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="inventoryData.length === 0">
+                  <td colspan="4" class="py-12 text-center text-gray-400 italic font-medium">
+                      No stock data records associated with your supplier account.
+                  </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="hidden md:flex md:flex-shrink-0" *ngIf="userRole$ | async as role">
+  <div class="flex flex-col w-64 bg-white border-r border-gray-100 h-full">
+    <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+      <nav class="mt-5 flex-1 px-3 space-y-1">
+        
+        <!-- General Dashboard -->
+        <a routerLink="/dashboard" routerLinkActive="bg-primary-50 text-secondary-700" [routerLinkActiveOptions]="{exact: true}" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all">
+          <svg class="text-primary-500 mr-3 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Overview
+        </a>
+
+        <!-- Consumer Specific -->
+        <ng-container *ngIf="role === UserRole.CONSUMER">
+          <div class="pt-6 pb-2 px-3">
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Buyer Portal</p>
+          </div>
+          <a routerLink="/dashboard/consumer/orders" routerLinkActive="bg-primary-50 text-secondary-700" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all">
+            <svg class="text-gray-400 group-hover:text-primary-500 mr-3 flex-shrink-0 h-5 w-5 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            My Orders
+          </a>
+        </ng-container>
+
+        <!-- Supplier Specific -->
+        <ng-container *ngIf="role === UserRole.SUPPLIER">
+          <div class="pt-6 pb-2 px-3">
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Supplier Portal</p>
+          </div>
+          <a routerLink="/dashboard/supplier/materials" routerLinkActive="bg-primary-50 text-secondary-700" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all">
+            <svg class="text-gray-400 group-hover:text-primary-500 mr-3 flex-shrink-0 h-5 w-5 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Raw Materials
+          </a>
+          <a routerLink="/dashboard/supplier/inventory" routerLinkActive="bg-primary-50 text-secondary-700" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all">
+            <svg class="text-gray-400 group-hover:text-primary-500 mr-3 flex-shrink-0 h-5 w-5 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Price & Stock
+          </a>
+          <a routerLink="/dashboard/supplier/contracts" routerLinkActive="bg-primary-50 text-secondary-700" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all">
+            <svg class="text-gray-400 group-hover:text-primary-500 mr-3 flex-shrink-0 h-5 w-5 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Contracts
+          </a>
+        </ng-container>
+
+        <!-- Shared/Public -->
+        <div class="pt-6 pb-2 px-3">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Global Network</p>
+        </div>
+        <a routerLink="/marketplace" routerLinkActive="bg-primary-50 text-secondary-700" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all">
+          <svg class="text-gray-400 group-hover:text-primary-500 mr-3 flex-shrink-0 h-5 w-5 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          Marketplace
+        </a>
+      </nav>
+    </div>
+    
+    <!-- User Footer -->
+    <div class="flex-shrink-0 flex border-t border-gray-100 p-4">
+      <div class="flex items-center w-full">
+        <img class="h-9 w-9 rounded-xl object-cover ring-2 ring-gray-100" src="https://ui-avatars.com/api/?name=User&background=4f46e5&color=fff" alt="">
+        <div class="ml-3 overflow-hidden">
+          <p class="text-xs font-bold text-gray-900 truncate uppercase tracking-tight">{{ role }}</p>
+          <a class="text-[10px] font-medium text-primary-600 hover:text-primary-500 transition-colors">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="px-4 sm:px-6 lg:px-8 py-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-xl font-extrabold text-gray-900 tracking-tight">Active Contracts</h1>
+      <p class="mt-2 text-sm text-gray-700 font-medium">Review and monitor your legal supply agreements and service level commitments.</p>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <p class="mt-4 text-gray-500 font-bold uppercase text-[10px] tracking-widest leading-none">Scanning legal ledger...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!isLoading && errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl mb-8">
+        <p class="text-sm text-red-700 font-bold">{{ errorMessage }}</p>
+    </div>
+
+    <ul *ngIf="!isLoading && !errorMessage" role="list" class="space-y-4">
+      <li *ngFor="let contract of contracts" class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-gray-200/50 transition-all p-6 group cursor-pointer">
+        <div class="flex items-center">
+          <div class="mr-6 flex-shrink-0">
+            <span class="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-primary-100 text-primary-700 transition-transform group-hover:scale-110">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor font-bold">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <p class="text-lg font-bold text-gray-900 group-hover:text-primary-600 transition-colors truncate">
+                {{ contract.contractName || 'Supply Agreement #' + (contract.contractId || contract.id) }}
+              </p>
+              <span class="inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest leading-none border"
+                [ngClass]="contract.isActive ? 'bg-green-50 text-green-700 border-green-100' : 'bg-gray-50 text-gray-400 border-gray-100'">
+                {{ contract.isActive ? 'Active Signature' : 'Terminated' }}
+              </span>
+            </div>
+            <div class="mt-2 flex items-center justify-between">
+              <p class="text-sm text-gray-500 font-medium truncate">
+                Requirement: {{ (contract.terms || 'Standard distribution terms apply.') }}
+              </p>
+              <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">
+                Valid until: {{ (contract.expiryDate | date:'mediumDate') || 'Open Ended' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Empty State -->
+      <li *ngIf="contracts.length === 0" class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-gray-100">
+          <p class="text-gray-500 font-medium italic">No active contracts found for this supplier profile.</p>
+      </li>
+    </ul>
+  </div>
+</div>

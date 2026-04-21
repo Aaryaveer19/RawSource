@@ -1,0 +1,83 @@
+<div class="bg-gray-50 min-h-screen py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="md:flex md:items-center md:justify-between mb-10">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-4xl font-extrabold leading-tight text-gray-900 tracking-tight sm:truncate">
+          Global Marketplace
+        </h2>
+        <p class="mt-2 text-md text-gray-500 font-medium italic">
+          Discover and source verified raw materials from around the world.
+        </p>
+      </div>
+      <div class="mt-6 flex md:mt-0 md:ml-4">
+        <!-- Search -->
+        <div class="relative rounded-2xl shadow-sm xl:min-w-[320px]">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-gray-400 font-bold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input type="text" class="focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-full pl-11 text-sm border-gray-200 rounded-2xl py-3 px-4 border shadow-inner bg-white transition-all" placeholder="Search by name, category...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-32">
+        <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-primary-600"></div>
+        <p class="mt-6 text-gray-500 font-bold tracking-widest uppercase text-xs">Accessing global network...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!isLoading && errorMessage" class="bg-red-50 border-l-4 border-red-500 p-6 rounded-2xl shadow-sm mb-8">
+        <p class="text-sm text-red-700 font-bold">{{ errorMessage }}</p>
+        <button (click)="fetchMaterials()" class="mt-4 text-xs font-black uppercase text-red-600 hover:text-red-500">Reconnect</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div *ngIf="!isLoading && !errorMessage && materials.length > 0" class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 gap-x-8 lg:grid-cols-3 xl:grid-cols-4">
+      <div *ngFor="let material of materials" class="group bg-white rounded-3xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all border border-gray-100 flex flex-col overflow-hidden relative">
+        
+        <!-- Action Overlay -->
+        <div class="absolute top-4 right-4 z-10">
+            <button class="bg-white/80 backdrop-blur-md p-2 rounded-xl text-gray-400 hover:text-red-500 transition-colors shadow-sm">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="w-full aspect-square bg-gray-100 overflow-hidden relative">
+          <img [src]="getPlaceholderImage(material.name)" [alt]="material.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
+
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex-1">
+              <span class="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md mb-2 inline-block">Verified RawSource</span>
+              <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors">{{ material.name }}</h3>
+              <p class="text-sm text-gray-500 font-medium mt-1">{{ material.description || 'Global standard raw material asset.' }}</p>
+          </div>
+          
+          <div class="mt-6 flex items-center justify-between border-t border-gray-50 pt-4">
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Market Price</p>
+                <p class="text-2xl font-black text-gray-900 leading-none">$45.00 <span class="text-xs text-gray-400 font-bold">/ unit</span></p>
+            </div>
+            <button class="bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-2xl shadow-lg shadow-primary-600/20 transition-all active:scale-95">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && !errorMessage && materials.length === 0" class="text-center py-32 bg-white rounded-3xl border-2 border-dashed border-gray-200">
+        <h3 class="text-lg font-bold text-gray-900">Marketplace is quiet right now</h3>
+        <p class="text-gray-500 mt-1">Check back later for new material listings.</p>
+    </div>
+  </div>
+</div>
