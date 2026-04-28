@@ -30,12 +30,25 @@ import com.example.supply_chain.entity.QualityRating;
 import com.example.supply_chain.repository.SupplierRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Data;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.security.Key;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/api/suppliers")
 @RequiredArgsConstructor
 public class SupplierController {
     private final SupplierRepository repository;
+    private final PasswordEncoder passwordEncoder;
+    private final Key jwtSecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     @GetMapping
     public List<Supplier> all(){
@@ -101,6 +114,75 @@ public class SupplierController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    // ---- Auth Endpoints ----
+
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Object>> register(@RequestBody RegisterRequest request) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
+            response.put("errorCode", "400");
+            response.put("errorDesc", "Email already exists");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            response.put("errorCode", "400");
+            response.put("errorDesc", "Passwords do not match");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        if (request.getPassword().length() < 6) {
+            response.put("errorCode", "400");
+            response.put("errorDesc", "Password must be at least 6 characters");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        Supplier supplier = new Supplier();
+        supplier.setName(request.getName());
+        supplier.setEmail(request.getEmail());
+        supplier.setContact(request.getPhone());
+        supplier.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        Supplier savedSupplier = repository.save(supplier);
+        String token = generateToken(savedSupplier.getEmail());
+
+        response.put("errorCode", "200");
+        response.put("token", token);
+        response.put("supplier", savedSupplier);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest request) {
+        Map<String, Object> response = new HashMap<>();
+
+        Optional<Supplier> supplierOpt = repository.findByEmail(request.getEmail());
+        if (supplierOpt.isEmpty() || !passwordEncoder.matches(request.getPassword(), supplierOpt.get().getPassword())) {
+            response.put("errorCode", "401");
+            response.put("errorDesc", "Invalid credentials");
+            return ResponseEntity.status(401).body(response);
+        }
+
+        Supplier supplier = supplierOpt.get();
+        String token = generateToken(supplier.getEmail());
+
+        response.put("errorCode", "200");
+        response.put("token", token);
+        response.put("supplier", supplier);
+        return ResponseEntity.ok(response);
+    }
+
+    private String generateToken(String email) {
+        long expireTime = 1000L * 60 * 60 * 24; // 24 hours
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
+                .signWith(jwtSecretKey)
+                .compact();
+    }
+
     private static String[] getNullPropertyNames(Object source) {
         BeanWrapper src = new BeanWrapperImpl(source);
         PropertyDescriptor[] pds = src.getPropertyDescriptors();
@@ -112,6 +194,20 @@ public class SupplierController {
         }
         return emptyNames.toArray(new String[0]);
     }
-}
 
+    @Data
+    public static class RegisterRequest {
+        private String name;
+        private String email;
+        private String phone;
+        private String password;
+        private String confirmPassword;
+    }
+
+    @Data
+    public static class LoginRequest {
+        private String email;
+        private String password;
+    }
+}
 

@@ -20,12 +20,12 @@ public class Availability {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "material_id", nullable = false)
-    @JsonIgnore
+    @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
     private RawMaterial material;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id", nullable = false)
-    @JsonIgnore
+    @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
     private Supplier supplier;
 
     @Column(name = "quantity")

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MarketplaceService } from '../../services/marketplace.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-marketplace-list',
@@ -8,18 +10,23 @@ import { MarketplaceService } from '../../services/marketplace.service';
   styleUrl: './marketplace-list.component.css'
 })
 export class MarketplaceListComponent implements OnInit {
-  materials: any[] = [];
+  materials: any[] = []; // Now stores MarketplaceListingDTO objects
   isLoading = true;
   errorMessage = '';
+  isOrdering = false;
 
-  constructor(private marketplaceService: MarketplaceService) {}
+  constructor(
+    private marketplaceService: MarketplaceService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchMaterials();
   }
 
   fetchMaterials(): void {
-    this.marketplaceService.getAllMaterials().subscribe(
+    this.marketplaceService.getListings().subscribe(
       (data) => {
         this.materials = data;
         this.isLoading = false;
@@ -32,8 +39,47 @@ export class MarketplaceListComponent implements OnInit {
     );
   }
 
+  orderItem(listing: any): void {
+    const user = this.authService.getCurrentUser();
+    const role = this.authService.getUserRole();
+    
+    if (!user || role !== 'CONSUMER') {
+      alert("Please log in as a Consumer to place orders.");
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
+    // Default quantity to 1 for spot ordering; a real app would prompt the user.
+    const orderQuantity = 1;
+
+    if (orderQuantity > listing.quantityAvailable) {
+        alert("Not enough stock available from this supplier!");
+        return;
+    }
+
+    this.isOrdering = true;
+    const payload = {
+        pricingId: listing.pricingId,
+        consumerId: user.consumerId,
+        quantity: orderQuantity
+    };
+
+    this.marketplaceService.purchase(payload).subscribe(
+        () => {
+            this.isOrdering = false;
+            alert(`Order placed successfully with ${listing.supplierName}!`);
+            this.fetchMaterials(); // Refresh stock
+        },
+        (err) => {
+            this.isOrdering = false;
+            alert("Failed to place order.");
+            console.error(err);
+        }
+    );
+  }
+
   // Helper for generating placeholder images if backend doesn't provide them
   getPlaceholderImage(name: string): string {
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=512`;
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'M')}&background=random&color=fff&size=512`;
   }
 }

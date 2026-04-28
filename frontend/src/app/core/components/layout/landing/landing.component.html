@@ -1,39 +1,200 @@
-<div class="relative bg-white overflow-hidden min-h-screen flex flex-col justify-center">
-  <div class="max-w-7xl mx-auto">
-    <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-      
-      <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-        <div class="sm:text-center lg:text-left">
-          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-            <span class="block xl:inline">Next-generation</span>
-            <span class="block text-indigo-600 xl:inline">Supply Chain Management</span>
-          </h1>
-          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-            Welcome to RawSource. Seamlessly track raw materials, manage your supplier contracts, and monitor real-time inventory from end-to-end.
-          </p>
-          <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-            <div class="rounded-md shadow">
-              <a routerLink="/auth/register" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg transition-colors">
-                Get started
-              </a>
-            </div>
-            <div class="mt-3 sm:mt-0 sm:ml-3">
-              <a routerLink="/auth/login" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg transition-colors">
-                Sign in
-              </a>
-            </div>
+<!-- Hero Section -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 overflow-hidden relative">
+
+  <!-- Animated Background Grid -->
+  <div class="absolute inset-0 opacity-20">
+    <div class="absolute inset-0" style="background-image: linear-gradient(rgba(99,102,241,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.3) 1px, transparent 1px); background-size: 50px 50px;"></div>
+  </div>
+
+  <!-- Glow Orbs -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500 rounded-full opacity-10 blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-violet-500 rounded-full opacity-10 blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+
+  <!-- Nav Bar -->
+  <nav class="relative z-10 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <span class="text-xl font-black text-white tracking-tight">RawSource</span>
+    </div>
+    <div class="hidden sm:flex items-center gap-4">
+      <a routerLink="/auth/login" class="text-sm font-semibold text-indigo-300 hover:text-white px-4 py-2">Sign In</a>
+      <a routerLink="/auth/register" class="text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 px-5 py-2.5 rounded-xl shadow-lg shadow-indigo-500/30">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-8 pt-16 pb-24 lg:pt-24 lg:pb-32">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: Text -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/30 rounded-full text-xs font-bold text-indigo-300 uppercase tracking-widest mb-8">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse inline-block"></span>
+          Live Supply Network Active
+        </div>
+
+        <h1 class="text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight tracking-tight mb-6">
+          The Future of<br/>
+          <span class="bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Raw Material</span><br/>
+          Sourcing
+        </h1>
+
+        <p class="text-lg text-slate-300 font-medium leading-relaxed max-w-xl mb-10">
+          Connect buyers and suppliers in a real-time marketplace. Manage contracts, track inventory, and source verified raw materials — all in one platform.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a routerLink="/auth/register" class="group inline-flex items-center justify-center gap-2 px-7 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-2xl shadow-xl shadow-indigo-500/30">
+            Start for Free
+            <svg class="w-4 h-4 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <a routerLink="/marketplace" class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-2xl backdrop-blur-sm">
+            <svg class="w-4 h-4 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Browse Marketplace
+          </a>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="mt-16 grid grid-cols-3 gap-6">
+          <div>
+            <p class="text-3xl font-black text-white">1,200+</p>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Active Suppliers</p>
+          </div>
+          <div class="border-l border-white/10 pl-6">
+            <p class="text-3xl font-black text-white">$48M+</p>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">GMV Processed</p>
+          </div>
+          <div class="border-l border-white/10 pl-6">
+            <p class="text-3xl font-black text-white">99.7%</p>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Uptime SLA</p>
           </div>
         </div>
-      </main>
+      </div>
+
+      <!-- Right: Dashboard Preview Card -->
+      <div class="hidden lg:block">
+        <div class="relative">
+          <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Dashboard Overview</p>
+                <p class="text-white font-black text-lg mt-1">Supply Chain Analytics</p>
+              </div>
+              <span class="px-2.5 py-1 bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold rounded-lg">Live</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Orders</p>
+                <p class="text-2xl font-black text-white mt-1">248</p>
+                <p class="text-xs text-green-400 font-semibold mt-1">↑ 12% this month</p>
+              </div>
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Contracts</p>
+                <p class="text-2xl font-black text-white mt-1">36</p>
+                <p class="text-xs text-indigo-400 font-semibold mt-1">→ 4 expiring soon</p>
+              </div>
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Materials Listed</p>
+                <p class="text-2xl font-black text-white mt-1">892</p>
+                <p class="text-xs text-violet-400 font-semibold mt-1">↑ 23 new today</p>
+              </div>
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Avg. Rating</p>
+                <p class="text-2xl font-black text-white mt-1">4.8 ★</p>
+                <p class="text-xs text-orange-400 font-semibold mt-1">→ Excellent</p>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Recent Activity</p>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
+                <div class="w-7 h-7 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-bold text-white truncate">Contract #C-1042 signed</p>
+                  <p class="text-xs text-slate-400">Steel Wire · 2 min ago</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
+                <div class="w-7 h-7 bg-indigo-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-bold text-white truncate">New material: Copper Alloy</p>
+                  <p class="text-xs text-slate-400">Marketplace · 8 min ago</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
+                <div class="w-7 h-7 bg-yellow-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-3.5 h-3.5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-bold text-white truncate">Order #ORD-248 shipped</p>
+                  <p class="text-xs text-slate-400">Titanium Sheets · 15 min ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute -bottom-4 -left-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2.5 rounded-2xl shadow-xl shadow-indigo-500/40 text-xs font-black uppercase tracking-widest">
+            Trusted by 500+ Enterprises
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  
-  <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-    <!-- A modern abstract background pattern or image for the right side -->
-    <div class="h-56 w-full sm:h-72 md:h-96 lg:w-full lg:h-full bg-indigo-50 flex items-center justify-center">
-        <svg class="w-1/2 h-1/2 text-indigo-200" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-        </svg>
+
+  <!-- Feature Strip -->
+  <div class="relative z-10 border-t border-white/10 bg-white/5 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-8 py-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-indigo-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Verified Suppliers</p>
+            <p class="text-xs text-slate-400 mt-1">All suppliers KYC-verified and rated</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-violet-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Real-Time Pricing</p>
+            <p class="text-xs text-slate-400 mt-1">Live market rates with validity windows</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-fuchsia-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-fuchsia-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Smart Contracts</p>
+            <p class="text-xs text-slate-400 mt-1">Legally binding agreements with terms</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-white">Analytics Dashboard</p>
+            <p class="text-xs text-slate-400 mt-1">Full visibility across your supply chain</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

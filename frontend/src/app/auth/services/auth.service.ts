@@ -84,8 +84,6 @@ export class AuthService {
 
   // Login Supplier
   loginSupplier(payload: LoginPayload): Observable<AuthResponse> {
-    // Note: The blueprint mentions backend completion pending for the actual supplier login,
-    // but the pattern remains the same.
     return this.http.post<AuthResponse>(`${this.apiUrl}/suppliers/login`, payload).pipe(
       tap(response => this.handleAuthResponse(response, UserRole.SUPPLIER))
     );

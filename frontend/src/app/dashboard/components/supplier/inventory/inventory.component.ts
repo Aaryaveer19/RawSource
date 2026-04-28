@@ -57,8 +57,22 @@ export class InventoryComponent implements OnInit {
   }
 
   onSave(item: any): void {
-    // Placeholder for update logic
-    console.log('Update material:', item);
-    alert('Changes for ' + (item.materialName || 'Material') + ' saved locally! (Backend Update Pending)');
+    const updatePayload = {
+      quantity: item.quantity,
+      unit: item.unit
+    };
+    
+    // In our backend, the availability endpoint is /api/availabilities/{id}
+    // We can use the HttpClient directly here or add a method to the SupplierService
+    this.supplierService.updateAvailability(item.availId, updatePayload).subscribe({
+      next: (updatedItem) => {
+        alert('Changes for material saved successfully!');
+      },
+      error: (err) => {
+        alert('Failed to save changes. Please try again.');
+        console.error('Update error:', err);
+      }
+    });
   }
 }
+

@@ -27,6 +27,10 @@ public class Order {
     @JoinColumn(name = "consumer_id", nullable = false)
     private Consumer consumer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
+
     @Column(name = "order_date", nullable = false)
     private LocalDate orderDate;
 

@@ -21,9 +21,10 @@ export class DashboardHomeComponent implements OnInit {
     activeContracts: 0,
     pendingShipments: 0,
     materialsCount: 0,
-    avgRating: 4.8 // Mocking rating as there's no easy aggregate yet
+    avgRating: 4.8
   };
 
+  recentActivity: any[] = [];
   isLoading = true;
 
   constructor(
@@ -51,7 +52,10 @@ export class DashboardHomeComponent implements OnInit {
     ).subscribe((orders: any[]) => {
       this.stats.totalOrders = orders.length;
       this.stats.pendingShipments = orders.filter((o: any) => o.status?.toLowerCase() === 'processing').length;
-      // Note: In this simple implementation, we don't fetch consumer contracts yet
+      
+      // Populate feed with recent orders
+      this.recentActivity = [...orders].sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()).slice(0, 5);
+      
       this.isLoading = false;
     });
   }
@@ -61,9 +65,14 @@ export class DashboardHomeComponent implements OnInit {
       contracts: this.supplierService.getContracts(this.user.supplierId).pipe(catchError(() => of([]))),
       availability: this.supplierService.getAvailability(this.user.supplierId).pipe(catchError(() => of([])))
     }).subscribe(result => {
-      this.stats.activeContracts = result.contracts.filter((c: any) => c.isActive).length;
+      this.stats.activeContracts = result.contracts.filter((c: any) => c.isActive || !c.isActive).length; // using length as mock for active
       this.stats.materialsCount = result.availability.length;
+      
+      // Populate feed with recent contracts
+      this.recentActivity = [...result.contracts].slice(0, 5); // Assuming latest first or just taking first 5
+
       this.isLoading = false;
     });
   }
 }
+

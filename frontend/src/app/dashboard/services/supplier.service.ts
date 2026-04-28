@@ -28,4 +28,20 @@ export class SupplierService {
   getContracts(supplierId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/suppliers/${supplierId}/contracts`);
   }
+
+  updateAvailability(availId: number, payload: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/availabilities/${availId}`, payload);
+  }
+
+  createRawMaterial(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/raw-materials`, payload);
+  }
+
+  createAvailability(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/availabilities`, payload);
+  }
+
+  createPricing(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/pricings`, payload);
+  }
 }

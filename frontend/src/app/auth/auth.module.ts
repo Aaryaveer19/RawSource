@@ -18,14 +18,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     HttpClientModule,
     RegisterComponent,
     LoginComponent
-  ],
-  providers: [
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
   ]
 })
 export class AuthModule { }

@@ -19,4 +19,14 @@ export class MarketplaceService {
   getMaterialRatings(materialId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/raw-materials/${materialId}/ratings`);
   }
+
+  // Get marketplace listings (Option B)
+  getListings(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/marketplace/listings`);
+  }
+
+  // Purchase directly from a supplier
+  purchase(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/marketplace/purchase`, payload);
+  }
 }

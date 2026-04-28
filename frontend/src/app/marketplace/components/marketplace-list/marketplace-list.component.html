@@ -48,26 +48,28 @@
         </div>
 
         <div class="w-full aspect-square bg-gray-100 overflow-hidden relative">
-          <img [src]="getPlaceholderImage(material.name)" [alt]="material.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90">
+          <img [src]="getPlaceholderImage(material.materialName)" [alt]="material.materialName" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90">
           <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
         </div>
 
         <div class="p-6 flex-1 flex flex-col">
           <div class="flex-1">
-              <span class="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md mb-2 inline-block">Verified RawSource</span>
-              <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors">{{ material.name }}</h3>
-              <p class="text-sm text-gray-500 font-medium mt-1">{{ material.description || 'Global standard raw material asset.' }}</p>
+              <span class="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md mb-2 inline-block">Supplier: {{ material.supplierName }}</span>
+              <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors">{{ material.materialName }}</h3>
+              <p class="text-sm text-gray-500 font-medium mt-1">{{ material.materialDescription || 'Global standard raw material asset.' }}</p>
+              <p class="text-xs text-gray-400 font-bold mt-2">Available: {{ material.quantityAvailable }} {{ material.unit }}</p>
           </div>
           
           <div class="mt-6 flex items-center justify-between border-t border-gray-50 pt-4">
             <div>
                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Market Price</p>
-                <p class="text-2xl font-black text-gray-900 leading-none">$45.00 <span class="text-xs text-gray-400 font-bold">/ unit</span></p>
+                <p class="text-2xl font-black text-gray-900 leading-none">₹{{ material.price }} <span class="text-xs text-gray-400 font-bold">/ {{ material.unit }}</span></p>
             </div>
-            <button class="bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-2xl shadow-lg shadow-primary-600/20 transition-all active:scale-95">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button (click)="orderItem(material)" [disabled]="isOrdering || material.quantityAvailable <= 0" class="bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-2xl shadow-lg shadow-primary-600/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg *ngIf="!isOrdering" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                 </svg>
+                <div *ngIf="isOrdering" class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
             </button>
           </div>
         </div>

@@ -2,6 +2,7 @@ package com.example.supply_chain.entity;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -24,11 +25,18 @@ public class Supplier {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "email", unique = true)
+    private String email;
+
     @Column(name = "address")
     private String address;
 
     @Column(name = "contact")
     private String contact;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
