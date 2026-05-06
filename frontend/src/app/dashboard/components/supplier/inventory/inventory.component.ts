@@ -43,7 +43,8 @@ export class InventoryComponent implements OnInit {
           const priceRecord = result.pricing.find((p: any) => p.materialId === avail.materialId);
           return {
             ...avail,
-            price: priceRecord?.price || 0
+            price: priceRecord?.price || 0,
+            pricingId: priceRecord?.pricingId
           };
         });
         this.isLoading = false;
@@ -57,15 +58,25 @@ export class InventoryComponent implements OnInit {
   }
 
   onSave(item: any): void {
-    const updatePayload = {
+    const availPayload = {
       quantity: item.quantity,
       unit: item.unit
     };
     
-    // In our backend, the availability endpoint is /api/availabilities/{id}
-    // We can use the HttpClient directly here or add a method to the SupplierService
-    this.supplierService.updateAvailability(item.availId, updatePayload).subscribe({
-      next: (updatedItem) => {
+    const pricePayload = {
+      price: item.price
+    };
+
+    const requests: any = {
+      availability: this.supplierService.updateAvailability(item.availId, availPayload)
+    };
+
+    if (item.pricingId) {
+      requests.pricing = this.supplierService.updatePricing(item.pricingId, pricePayload);
+    }
+    
+    forkJoin(requests).subscribe({
+      next: () => {
         alert('Changes for material saved successfully!');
       },
       error: (err) => {

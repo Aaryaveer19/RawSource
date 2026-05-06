@@ -34,6 +34,10 @@ export class SupplierService {
     return this.http.patch<any>(`${this.apiUrl}/availabilities/${availId}`, payload);
   }
 
+  updatePricing(pricingId: number, payload: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/pricings/${pricingId}`, payload);
+  }
+
   createRawMaterial(payload: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/raw-materials`, payload);
   }
@@ -44,5 +48,13 @@ export class SupplierService {
 
   createPricing(payload: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/pricings`, payload);
+  }
+
+  getOrders(supplierId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/orders/supplier/${supplierId}`);
+  }
+
+  updateOrderStatus(orderId: number, status: string): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/orders/${orderId}/status`, { status });
   }
 }

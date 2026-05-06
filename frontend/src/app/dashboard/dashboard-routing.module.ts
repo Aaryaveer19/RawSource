@@ -8,6 +8,7 @@ import { OrderItemsComponent } from './components/consumer/order-items/order-ite
 import { MaterialsComponent } from './components/supplier/materials/materials.component';
 import { InventoryComponent } from './components/supplier/inventory/inventory.component';
 import { ContractsComponent } from './components/supplier/contracts/contracts.component';
+import { SupplierOrdersComponent } from './components/supplier/supplier-orders/supplier-orders.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'consumer/orders/:id', component: OrderItemsComponent },
       { path: 'supplier/materials', component: MaterialsComponent },
       { path: 'supplier/inventory', component: InventoryComponent },
-      { path: 'supplier/contracts', component: ContractsComponent }
+      { path: 'supplier/contracts', component: ContractsComponent },
+      { path: 'supplier/orders', component: SupplierOrdersComponent }
     ]
   }
 ];

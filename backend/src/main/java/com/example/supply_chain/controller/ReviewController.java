@@ -25,11 +25,16 @@ import com.example.supply_chain.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import com.example.supply_chain.entity.QualityRating;
+import com.example.supply_chain.repository.QualityRatingRepository;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewRepository repository;
+    private final QualityRatingRepository qualityRatingRepository;
 
     @GetMapping
     public List<Review> all(){
@@ -43,7 +48,37 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<Review> create(@RequestBody Review r){
+        // Save the review
         Review saved = repository.save(r);
+
+        // Update QualityRating
+        if (r.getMaterial() != null && r.getMaterial().getMaterialId() != null) {
+            Long materialId = r.getMaterial().getMaterialId();
+            List<Review> reviews = repository.findByMaterialMaterialId(materialId);
+            
+            if (!reviews.isEmpty()) {
+                double avg = reviews.stream()
+                        .filter(rev -> rev.getRating() != null)
+                        .mapToInt(Review::getRating)
+                        .average()
+                        .orElse(0.0);
+                
+                int roundedAvg = (int) Math.round(avg);
+                
+                Optional<QualityRating> qrOpt = qualityRatingRepository.findByMaterialMaterialId(materialId);
+                QualityRating qr;
+                if (qrOpt.isPresent()) {
+                    qr = qrOpt.get();
+                } else {
+                    qr = new QualityRating();
+                    qr.setMaterial(r.getMaterial());
+                    qr.setSupplier(r.getSupplier());
+                }
+                qr.setAggregateScore(roundedAvg);
+                qualityRatingRepository.save(qr);
+            }
+        }
+
         return ResponseEntity.created(URI.create("/api/reviews/" + saved.getReviewId())).body(saved);
     }
 

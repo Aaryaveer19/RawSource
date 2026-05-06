@@ -24,6 +24,7 @@ public class MarketplaceController {
     private final ContractRepository contractRepository;
     private final OrderRepository orderRepository;
     private final ConsumerRepository consumerRepository;
+    private final QualityRatingRepository qualityRatingRepository;
 
     @GetMapping("/listings")
     public ResponseEntity<List<MarketplaceListingDTO>> getListings() {
@@ -48,6 +49,13 @@ public class MarketplaceController {
             } else {
                 dto.setQuantityAvailable(0);
                 dto.setUnit("units");
+            }
+
+            Optional<QualityRating> qrOpt = qualityRatingRepository.findByMaterialMaterialId(p.getMaterial().getMaterialId());
+            if (qrOpt.isPresent()) {
+                dto.setQualityRating(qrOpt.get().getAggregateScore());
+            } else {
+                dto.setQualityRating(0); // 0 means unrated
             }
             
             listings.add(dto);
@@ -117,6 +125,7 @@ public class MarketplaceController {
         private BigDecimal price;
         private Integer quantityAvailable;
         private String unit;
+        private Integer qualityRating;
     }
 
     @Data

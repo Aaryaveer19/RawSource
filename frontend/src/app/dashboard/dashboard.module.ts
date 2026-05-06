@@ -12,6 +12,7 @@ import { MaterialsComponent } from './components/supplier/materials/materials.co
 import { InventoryComponent } from './components/supplier/inventory/inventory.component';
 import { ContractsComponent } from './components/supplier/contracts/contracts.component';
 import { DashboardHomeComponent } from './components/dashboard-home/dashboard-home.component';
+import { SupplierOrdersComponent } from './components/supplier/supplier-orders/supplier-orders.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DashboardHomeComponent } from './components/dashboard-home/dashboard-ho
     MaterialsComponent,
     InventoryComponent,
     ContractsComponent,
-    DashboardHomeComponent
+    DashboardHomeComponent,
+    SupplierOrdersComponent
   ],
   imports: [
     CommonModule,

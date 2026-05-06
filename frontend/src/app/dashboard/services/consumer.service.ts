@@ -20,4 +20,14 @@ export class ConsumerService {
   getOrderItems(orderId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/orders/${orderId}/items`);
   }
+
+  // Get order details (for status)
+  getOrder(orderId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/orders/${orderId}`);
+  }
+
+  // Submit review
+  submitReview(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reviews`, payload);
+  }
 }

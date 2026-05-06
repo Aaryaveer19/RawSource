@@ -23,11 +23,11 @@ public class Order {
     @Column(name = "order_id")
     private Long orderId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "consumer_id", nullable = false)
     private Consumer consumer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
@@ -40,6 +40,10 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<OrderItem> items = new ArrayList<>();
+
+    @Builder.Default
+    @Column(name = "status", nullable = false, columnDefinition = "varchar(255) default 'PENDING'")
+    private String status = "PENDING";
 }
 
 

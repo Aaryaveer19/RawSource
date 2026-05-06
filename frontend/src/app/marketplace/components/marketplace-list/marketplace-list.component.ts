@@ -28,7 +28,7 @@ export class MarketplaceListComponent implements OnInit {
   fetchMaterials(): void {
     this.marketplaceService.getListings().subscribe(
       (data) => {
-        this.materials = data;
+        this.materials = data.map((item: any) => ({ ...item, orderQuantity: 1 }));
         this.isLoading = false;
       },
       (error) => {
@@ -49,8 +49,8 @@ export class MarketplaceListComponent implements OnInit {
       return;
     }
 
-    // Default quantity to 1 for spot ordering; a real app would prompt the user.
-    const orderQuantity = 1;
+    // Use the quantity selected by the user
+    const orderQuantity = listing.orderQuantity || 1;
 
     if (orderQuantity > listing.quantityAvailable) {
         alert("Not enough stock available from this supplier!");
