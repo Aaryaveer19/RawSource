@@ -14,6 +14,19 @@ export class MarketplaceListComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
   isOrdering = false;
+  searchTerm: string = '';
+
+  get filteredMaterials(): any[] {
+    if (!this.searchTerm) {
+      return this.materials;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.materials.filter(m => 
+      (m.materialName && m.materialName.toLowerCase().includes(term)) ||
+      (m.materialDescription && m.materialDescription.toLowerCase().includes(term)) ||
+      (m.supplierName && m.supplierName.toLowerCase().includes(term))
+    );
+  }
 
   constructor(
     private marketplaceService: MarketplaceService,

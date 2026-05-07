@@ -20,8 +20,7 @@ export class DashboardHomeComponent implements OnInit {
     totalOrders: 0,
     activeContracts: 0,
     pendingShipments: 0,
-    materialsCount: 0,
-    avgRating: 4.8
+    materialsCount: 0
   };
 
   recentActivity: any[] = [];
