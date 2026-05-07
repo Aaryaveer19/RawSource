@@ -14,7 +14,7 @@
 backend/target/
 backend/.mvn/wrapper/maven-wrapper.jar
 backend/*.log
-
+backend/logs/
 # ===========================
 # Frontend (Node / Angular)
 # ===========================
