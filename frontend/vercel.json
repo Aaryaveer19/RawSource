@@ -1,4 +1,7 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/user-project/browser",
+  "framework": "angular",
   "rewrites": [
     {
       "source": "/(.*)",
